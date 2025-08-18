@@ -13,6 +13,7 @@ const ThemeSwitcher = () => {
 
   // Load saved tab from localStorage on component mount
 
+
   useEffect(() => {
     setTheme(localStorage.getItem("theme") || "light");
     setMounted(true);
@@ -20,7 +21,49 @@ const ThemeSwitcher = () => {
     if (savedThemes) {
       setThemes(JSON.parse(savedThemes));
     }
-  }, []);
+
+    // Listener für Änderungen an localStorage (z.B. in anderen Tabs)
+    const handleStorage = (event) => {
+      if (event.key === "themes") {
+        setThemes(event.newValue ? JSON.parse(event.newValue) : [{
+          name: "Default",
+          foreground: "#000000",
+          background: "#ffffff"
+        }]);
+      }
+      if (event.key === "theme") {
+        setTheme(event.newValue || "Default");
+      }
+    };
+    window.addEventListener("storage", handleStorage);
+
+    // Überwache localStorage mit einem Interval für lokale Änderungen
+    const checkLocalStorage = () => {
+      const currentThemes = localStorage.getItem("themes");
+      const currentTheme = localStorage.getItem("theme");
+
+      if (currentThemes) {
+        const parsedThemes = JSON.parse(currentThemes);
+        setThemes(prev => {
+          if (JSON.stringify(prev) !== JSON.stringify(parsedThemes)) {
+            return parsedThemes;
+          }
+          return prev;
+        });
+      }
+
+      if (currentTheme && currentTheme !== theme) {
+        setTheme(currentTheme);
+      }
+    };
+
+    const interval = setInterval(checkLocalStorage, 500);
+
+    return () => {
+      window.removeEventListener("storage", handleStorage);
+      clearInterval(interval);
+    };
+  }, [theme]);
 
   useEffect(() => {
     // Set data-theme attribute for CSS
@@ -37,17 +80,6 @@ const ThemeSwitcher = () => {
       document.documentElement.style.removeProperty('--foreground');
     }
   }, [theme, themes]);
-  // Theme löschen
-  const deleteTheme = (name) => {
-    const filtered = themes.filter(t => t.name !== name);
-    setThemes(filtered);
-    localStorage.setItem("themes", JSON.stringify(filtered));
-    // Falls das aktuelle Theme gelöscht wurde, auf Default zurücksetzen
-    if (theme === name) {
-      setTheme("Default");
-      localStorage.setItem("theme", "Default");
-    }
-  };
 
   const toggleTheme = (e) => {
     setTheme(e.target.value);
@@ -61,16 +93,6 @@ const ThemeSwitcher = () => {
           <option key={index} value={theme.name}>{theme.name}</option>
         ))}
       </select>
-      <ul className="fixed top-12 right-2 bg-white dark:bg-gray-900 p-2 rounded z-20">
-        {themes?.map((theme, index) => (
-          <li key={index} className="flex items-center justify-between">
-            <span>{theme.name}</span>
-            {theme.name !== "Default" && (
-              <button onClick={() => deleteTheme(theme.name)} className="ml-2 text-red-500">Delete</button>
-            )}
-          </li>
-        ))}
-      </ul>
     </div>
   )
 }
