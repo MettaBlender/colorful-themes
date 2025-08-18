@@ -2,6 +2,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeSwitcher from "@/components/themeSwitcher";
+import GoToColorThemeManger from "@/components/goToColorThemeManger";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +31,8 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeSwitcher/>
+        <ThemeSwitcher className='right-14'/>
+        <GoToColorThemeManger/>
         {children}
       </body>
     </html>

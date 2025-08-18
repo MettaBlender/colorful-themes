@@ -2,7 +2,7 @@
 
 import React, {useState, useEffect} from 'react'
 
-const ThemeSwitcher = () => {
+const ThemeSwitcher = ({className}) => {
     const [theme, setTheme] = useState("");
     const [mounted, setMounted] = useState(false);
     const [themes, setThemes] = useState([{
@@ -87,13 +87,11 @@ const ThemeSwitcher = () => {
   };
 
   return (
-    <div>
-      <select className="fixed top-2 right-2 bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-2 rounded z-20 overflow-y-auto" onChange={toggleTheme} value={theme}>
-        {themes?.map((theme, index) => (
-          <option key={index} value={theme.name}>{theme.name}</option>
-        ))}
-      </select>
-    </div>
+    <select className={`fixed top-2 right-2 bg-[#00C4FF] p-2 rounded z-20 overflow-y-auto h-10 text-[#FF4E88] ${className}`} onChange={toggleTheme} value={theme}>
+      {themes?.map((theme, index) => (
+        <option key={index} style={{ backgroundColor: theme.background, color: theme.foreground }} value={theme.name}>{theme.name}</option>
+      ))}
+    </select>
   )
 }
 
