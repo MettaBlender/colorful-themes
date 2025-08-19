@@ -3,35 +3,26 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-
-  /* Hintergrundfarben */
-  --background-primary: #FFFFFF; /* Weiß als Haupt-Hintergrund */
-  --background-secondary: #F3F4F6; /* Helles Grau für Karten */
-  --background-tertiary: #E5E7EB; /* Noch helleres Grau für Subtlelemente */
-
-  /* Vordergrundfarben (Text) */
-  --foreground-primary: #1F2937; /* Dunkles Grau für Haupt-Text */
-  --foreground-secondary: #6B7280; /* Mittleres Grau für sekundären Text */
-  --foreground-disabled: #9CA3AF; /* Helles Grau für deaktivierte Elemente */
-
-  /* Akzentfarben (aus deinem colorful-themes-Konzept) */
-  --accent-primary: #FF4E88; /* Kräftiges Pink */
-  --accent-secondary: #FF99BB; /* Helles Pink */
-  --accent-tertiary: #00C4FF; /* Leuchtendes Cyan */
-  --accent-quaternary: #66E0FF; /* Helles Cyan */
-
-  /* Interaktive Elemente */
-  --focus-ring: #FF99BB; /* Helles Pink für Fokus-Ringe */
-  --hover: #66E0FF; /* Helles Cyan für Hover-Effekte */
-
-  /* Fehler- und Statusfarben */
-  --error: #EF4444; /* Rot für Fehler */
-  --success: #10B981; /* Grün für Erfolg */
-  --warning: #F59E0B; /* Gelb für Warnungen */
-
-  /* Ränder */
-  --border-primary: #D1D5DB; /* Helles Grau für Ränder */
-  --border-secondary: #E5E7EB; /* Noch helleres Grau für Trennlinien */
+  --color-background-secondary: var(--background-secondary);
+  --color-foreground-secondary: var(--foreground-secondary);
+  --color-background-tertiary: var(--background-tertiary);
+  --color-foreground-tertiary: var(--foreground-tertiary);
+  --color-button-background: var(--button-background);
+  --color-button-hover: var(--button-hover);
+  --color-button-text: var(--button-text);
+  --color-link: var(--link-color);
+  --color-link-clicked: var(--link-clicked-color);
+  --color-hover: var(--hover);
+  --color-error: var(--error);
+  --color-warning: var(--warning);
+  --color-success: var(--success);
+  --color-border: var(--border);
+  --color-border-secondary: var(--border-secondary);
+  --color-accent: var(--accent);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-tertiary: var(--accent-tertiary);
+  --color-accent-quaternary: var(--accent-quaternary);
+  --color-focus-ring: var(--focus-ring);
 }
 
 body {

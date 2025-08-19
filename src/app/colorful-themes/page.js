@@ -8,22 +8,52 @@ const page = () => {
     id: 0,
     name: "Default",
     foreground: "#000000",
+    foregroundSecondary: "#6B7280",
+    foregroundTertiary: "#9CA3AF",
     background: "#ffffff",
+    backgroundSecondary: "#F3F4F6",
+    backgroundTertiary: "#E5E7EB",
     buttonBackground: "#00C4FF",
     buttonHover: "#FF4E88",
     buttonText: "#ffffff",
     linkColor: "#00C4FF",
-    linkClickedColor: "#FF4E88"
+    linkClickedColor: "#FF4E88",
+    accentPrimary: "#00C4FF",
+    accentSecondary: "#FF99BB",
+    accentTertiary: "#FF4E88",
+    accentQuaternary: "#66E0FF",
+    focusRing: "#FF4E88",
+    hover: "#FF4E88",
+    error: "#EF4444",
+    warning: "#F59E0B",
+    success: "#10B981",
+    borderPrimary: "#D1D5DB",
+    borderSecondary: "#E5E7EB"
   }])
 
   const [colors, setColors] = useState({
     foreground: "#000000",
+    foregroundSecondary: "#6B7280",
+    foregroundTertiary: "#9CA3AF",
     background: "#ffffff",
+    backgroundSecondary: "#F3F4F6",
+    backgroundTertiary: "#E5E7EB",
     buttonBackground: "#00C4FF",
     buttonHover: "#FF4E88",
     buttonText: "#ffffff",
     linkColor: "#00C4FF",
-    linkClickedColor: "#FF4E88"
+    linkClickedColor: "#FF4E88",
+    accentPrimary: "#00C4FF",
+    accentSecondary: "#FF99BB",
+    accentTertiary: "#FF4E88",
+    accentQuaternary: "#66E0FF",
+    focusRing: "#FF4E88",
+    hover: "#FF4E88",
+    error: "#EF4444",
+    warning: "#F59E0B",
+    success: "#10B981",
+    borderPrimary: "#D1D5DB",
+    borderSecondary: "#E5E7EB"
   })
 
   const [warningOpen, setWarningOpen] = useState(false);
@@ -74,12 +104,27 @@ const page = () => {
     // Reset form
     setColors({
       foreground: "#000000",
+      foregroundSecondary: "#6B7280",
+      foregroundTertiary: "#9CA3AF",
       background: "#ffffff",
+      backgroundSecondary: "#F3F4F6",
+      backgroundTertiary: "#E5E7EB",
       buttonBackground: "#00C4FF",
       buttonHover: "#FF4E88",
       buttonText: "#ffffff",
       linkColor: "#00C4FF",
-      linkClickedColor: "#FF4E88"
+      linkClickedColor: "#FF4E88",
+      accentPrimary: "#00C4FF",
+      accentSecondary: "#FF99BB",
+      accentTertiary: "#FF4E88",
+      accentQuaternary: "#66E0FF",
+      focusRing: "#FF4E88",
+      hover: "#FF4E88",
+      error: "#EF4444",
+      warning: "#F59E0B",
+      success: "#10B981",
+      borderPrimary: "#D1D5DB",
+      borderSecondary: "#E5E7EB"
     });
   }
 
@@ -107,11 +152,26 @@ const page = () => {
     setColors({
       foreground: theme.foreground || "#000000",
       background: theme.background || "#ffffff",
+      foregroundSecondary: theme.foregroundSecondary || "#6B7280",
+      backgroundSecondary: theme.backgroundSecondary || "#F3F4F6",
+      foregroundTertiary: theme.foregroundTertiary || "#9CA3AF",
+      backgroundTertiary: theme.backgroundTertiary || "#E5E7EB",
       buttonBackground: theme.buttonBackground || "#00C4FF",
       buttonHover: theme.buttonHover || "#FF4E88",
       buttonText: theme.buttonText || "#ffffff",
       linkColor: theme.linkColor || "#00C4FF",
-      linkClickedColor: theme.linkClickedColor || "#FF4E88"
+      linkClickedColor: theme.linkClickedColor || "#FF4E88",
+      accentPrimary: theme.accentPrimary || "#00C4FF",
+      accentSecondary: theme.accentSecondary || "#FF99BB",
+      accentTertiary: theme.accentTertiary || "#FF4E88",
+      accentQuaternary: theme.accentQuaternary || "#66E0FF",
+      focusRing: theme.focusRing || "#FF4E88",
+      hover: theme.hover || "#FF4E88",
+      error: theme.error || "#EF4444",
+      warning: theme.warning || "#F59E0B",
+      success: theme.success || "#10B981",
+      borderPrimary: theme.borderPrimary || "#D1D5DB",
+      borderSecondary: theme.borderSecondary || "#E5E7EB"
     });
     // Set the name input value via form field
     const nameInput = document.querySelector('input[name="name"]');
@@ -166,8 +226,24 @@ const page = () => {
                 <input type="color" name="foreground" value={colors.foreground} onChange={(e) => setColors({...colors, foreground: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
               </div>
               <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>foreground secondary color</label>
+                <input type="color" name="foregroundSecondary" value={colors.foregroundSecondary} onChange={(e) => setColors({...colors, foregroundSecondary: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>foreground tertiary color</label>
+                <input type="color" name="foregroundTertiary" value={colors.foregroundTertiary} onChange={(e) => setColors({...colors, foregroundTertiary: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
                 <label className='text-[#FF4E88] text-xl font-bold'>background color</label>
                 <input type="color" name="background" value={colors.background} onChange={(e) => setColors({...colors, background: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>background secondary color</label>
+                <input type="color" name="backgroundSecondary" value={colors.backgroundSecondary} onChange={(e) => setColors({...colors, backgroundSecondary: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>background tertiary color</label>
+                <input type="color" name="backgroundTertiary" value={colors.backgroundTertiary} onChange={(e) => setColors({...colors, backgroundTertiary: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
               </div>
               <div className='flex items-center gap-3'>
                 <label className='text-[#FF4E88] text-xl font-bold'>button background color</label>
@@ -188,6 +264,50 @@ const page = () => {
               <div className='flex items-center gap-3'>
                 <label className='text-[#FF4E88] text-xl font-bold'>link visited text color</label>
                 <input type="color" name="linkClickedColor" value={colors.linkClickedColor} onChange={(e) => setColors({...colors, linkClickedColor: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>accent color</label>
+                <input type="color" name="accentPrimary" value={colors.accentPrimary} onChange={(e) => setColors({...colors, accentPrimary: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>accent secondary color</label>
+                <input type="color" name="accentSecondary" value={colors.accentSecondary} onChange={(e) => setColors({...colors, accentSecondary: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>accent tertiary color</label>
+                <input type="color" name="accentTertiary" value={colors.accentTertiary} onChange={(e) => setColors({...colors, accentTertiary: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>accent quaternary color</label>
+                <input type="color" name="accentQuaternary" value={colors.accentQuaternary} onChange={(e) => setColors({...colors, accentQuaternary: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>focus ring color</label>
+                <input type="color" name="focusRing" value={colors.focusRing} onChange={(e) => setColors({...colors, focusRing: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>error color</label>
+                <input type="color" name="error" value={colors.error} onChange={(e) => setColors({...colors, error: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>warning color</label>
+                <input type="color" name="warning" value={colors.warning} onChange={(e) => setColors({...colors, warning: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>success color</label>
+                <input type="color" name="success" value={colors.success} onChange={(e) => setColors({...colors, success: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>hover color</label>
+                <input type="color" name="hover" value={colors.hover} onChange={(e) => setColors({...colors, hover: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>border color</label>
+                <input type="color" name="border" value={colors.borderPrimary} onChange={(e) => setColors({...colors, borderPrimary: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>border secondary color</label>
+                <input type="color" name="borderSecondary" value={colors.borderSecondary} onChange={(e) => setColors({...colors, borderSecondary: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
               </div>
               <div className='flex gap-2'>
                 <button type="submit" className='bg-[#00C4FF] hover:bg-[#FF4E88] transition-colors duration-400 ease-in-out text-white px-4 py-2 rounded cursor-pointer'>

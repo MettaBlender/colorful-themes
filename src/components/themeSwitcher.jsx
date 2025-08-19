@@ -81,15 +81,45 @@ const ThemeSwitcher = ({className}) => {
       document.documentElement.style.setProperty('--button-text', customTheme.buttonText);
       document.documentElement.style.setProperty('--link-color', customTheme.linkColor);
       document.documentElement.style.setProperty('--link-clicked-color', customTheme.linkClickedColor);
+      document.documentElement.style.setProperty('--background-secondary', customTheme.backgroundSecondary);
+      document.documentElement.style.setProperty('--foreground-secondary', customTheme.foregroundSecondary);
+      document.documentElement.style.setProperty('--background-tertiary', customTheme.backgroundTertiary);
+      document.documentElement.style.setProperty('--foreground-tertiary', customTheme.foregroundTertiary);
+      document.documentElement.style.setProperty('--accent', customTheme.accentPrimary);
+      document.documentElement.style.setProperty('--accent-secondary', customTheme.accentSecondary);
+      document.documentElement.style.setProperty('--accent-tertiary', customTheme.accentTertiary);
+      document.documentElement.style.setProperty('--accent-quaternary', customTheme.accentQuaternary);
+      document.documentElement.style.setProperty('--focus-ring', customTheme.focusRing);
+      document.documentElement.style.setProperty('--hover', customTheme.hover);
+      document.documentElement.style.setProperty('--error', customTheme.error);
+      document.documentElement.style.setProperty('--warning', customTheme.warning);
+      document.documentElement.style.setProperty('--success', customTheme.success);
+      document.documentElement.style.setProperty('--border', customTheme.borderPrimary);
+      document.documentElement.style.setProperty('--border-secondary', customTheme.borderSecondary);
     } else {
       // Setze auf Standardwerte zurück
       document.documentElement.style.removeProperty('--background');
       document.documentElement.style.removeProperty('--foreground');
+      document.documentElement.style.removeProperty('--background-secondary');
+      document.documentElement.style.removeProperty('--foreground-secondary');
+      document.documentElement.style.removeProperty('--background-tertiary');
+      document.documentElement.style.removeProperty('--foreground-tertiary');
       document.documentElement.style.removeProperty('--button-background');
       document.documentElement.style.removeProperty('--button-hover');
       document.documentElement.style.removeProperty('--button-text');
       document.documentElement.style.removeProperty('--link-color');
       document.documentElement.style.removeProperty('--link-clicked-color');
+      document.documentElement.style.removeProperty('--hover');
+      document.documentElement.style.removeProperty('--error');
+      document.documentElement.style.removeProperty('--warning');
+      document.documentElement.style.removeProperty('--success');
+      document.documentElement.style.removeProperty('--border');
+      document.documentElement.style.removeProperty('--border-secondary');
+      document.documentElement.style.removeProperty('--accent');
+      document.documentElement.style.removeProperty('--accent-secondary');
+      document.documentElement.style.removeProperty('--accent-tertiary');
+      document.documentElement.style.removeProperty('--accent-quaternary');
+      document.documentElement.style.removeProperty('--focus-ring');
     }
   }, [theme, themes]);
 
