@@ -1,22 +1,57 @@
 @import "tailwindcss";
 
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  /* Hintergrundfarben */
+  --background-primary: #FFFFFF; /* Weiß als Haupt-Hintergrund */
+  --background-secondary: #F3F4F6; /* Helles Grau für Karten */
+  --background-tertiary: #E5E7EB; /* Noch helleres Grau für Subtlelemente */
+
+  /* Vordergrundfarben (Text) */
+  --foreground-primary: #1F2937; /* Dunkles Grau für Haupt-Text */
+  --foreground-secondary: #6B7280; /* Mittleres Grau für sekundären Text */
+  --foreground-disabled: #9CA3AF; /* Helles Grau für deaktivierte Elemente */
+
+  /* Akzentfarben (aus deinem colorful-themes-Konzept) */
+  --accent-primary: #FF4E88; /* Kräftiges Pink */
+  --accent-secondary: #FF99BB; /* Helles Pink */
+  --accent-tertiary: #00C4FF; /* Leuchtendes Cyan */
+  --accent-quaternary: #66E0FF; /* Helles Cyan */
+
+  /* Interaktive Elemente */
+  --focus-ring: #FF99BB; /* Helles Pink für Fokus-Ringe */
+  --hover: #66E0FF; /* Helles Cyan für Hover-Effekte */
+
+  /* Fehler- und Statusfarben */
+  --error: #EF4444; /* Rot für Fehler */
+  --success: #10B981; /* Grün für Erfolg */
+  --warning: #F59E0B; /* Gelb für Warnungen */
+
+  /* Ränder */
+  --border-primary: #D1D5DB; /* Helles Grau für Ränder */
+  --border-secondary: #E5E7EB; /* Noch helleres Grau für Trennlinien */
 }
-
-
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+  background-color: var(--button-background);
+  color: var(--button-text);
+
+  &:hover {
+    background-color: var(--button-hover);
+  }
+}
+
+a, Link {
+  color: var(--link-color);
+
+  &:visited {
+    color: var(--link-clicked-color);
+  }
 }

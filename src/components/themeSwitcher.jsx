@@ -8,7 +8,8 @@ const ThemeSwitcher = ({className}) => {
     const [themes, setThemes] = useState([{
       name: "Default",
       foreground: "#000000",
-      background: "#ffffff"
+      background: "#ffffff",
+      buttonBackground: "#00C4FF",
     }])
 
   // Load saved tab from localStorage on component mount
@@ -28,7 +29,8 @@ const ThemeSwitcher = ({className}) => {
         setThemes(event.newValue ? JSON.parse(event.newValue) : [{
           name: "Default",
           foreground: "#000000",
-          background: "#ffffff"
+          background: "#ffffff",
+          buttonBackground: "#00C4FF",
         }]);
       }
       if (event.key === "theme") {
@@ -74,10 +76,20 @@ const ThemeSwitcher = ({className}) => {
     if (customTheme) {
       document.documentElement.style.setProperty('--background', customTheme.background);
       document.documentElement.style.setProperty('--foreground', customTheme.foreground);
+      document.documentElement.style.setProperty('--button-background', customTheme.buttonBackground);
+      document.documentElement.style.setProperty('--button-hover', customTheme.buttonHover);
+      document.documentElement.style.setProperty('--button-text', customTheme.buttonText);
+      document.documentElement.style.setProperty('--link-color', customTheme.linkColor);
+      document.documentElement.style.setProperty('--link-clicked-color', customTheme.linkClickedColor);
     } else {
       // Setze auf Standardwerte zurück
       document.documentElement.style.removeProperty('--background');
       document.documentElement.style.removeProperty('--foreground');
+      document.documentElement.style.removeProperty('--button-background');
+      document.documentElement.style.removeProperty('--button-hover');
+      document.documentElement.style.removeProperty('--button-text');
+      document.documentElement.style.removeProperty('--link-color');
+      document.documentElement.style.removeProperty('--link-clicked-color');
     }
   }, [theme, themes]);
 

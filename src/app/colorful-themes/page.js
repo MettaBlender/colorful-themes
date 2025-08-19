@@ -5,13 +5,26 @@ import React, { useEffect, useState } from 'react'
 const page = () => {
 
   const [themes, setThemes] = useState([{
+    id: 0,
     name: "Default",
     foreground: "#000000",
-    background: "#ffffff"
+    background: "#ffffff",
+    buttonBackground: "#00C4FF",
+    buttonHover: "#FF4E88",
+    buttonText: "#ffffff",
+    linkColor: "#00C4FF",
+    linkClickedColor: "#FF4E88"
   }])
 
-  const [foreground, setForeground] = useState("#000000");
-  const [background, setBackground] = useState("#ffffff");
+  const [colors, setColors] = useState({
+    foreground: "#000000",
+    background: "#ffffff",
+    buttonBackground: "#00C4FF",
+    buttonHover: "#FF4E88",
+    buttonText: "#ffffff",
+    linkColor: "#00C4FF",
+    linkClickedColor: "#FF4E88"
+  })
 
   const [warningOpen, setWarningOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
@@ -21,21 +34,53 @@ const page = () => {
     const savedThemes = localStorage.getItem("themes");
     console.log("themes", savedThemes);
     if (savedThemes) {
-      setThemes(JSON.parse(savedThemes));
+      const parsedThemes = JSON.parse(savedThemes);
+      // Ensure all themes have an id
+      const themesWithIds = parsedThemes.map((theme, index) => ({
+        ...theme,
+        id: theme.id || index
+      }));
+      setThemes(themesWithIds);
     }
   }, []);
 
   const saveTheme = (e) => {
     e.preventDefault();
-    const newTheme = {
-      id: Date.now(),
-      name: e.target.name.value,
-      foreground: foreground,
-      background: background
-    };
-    const updatedThemes = [...themes, newTheme];
-    setThemes(updatedThemes);
-    localStorage.setItem("themes", JSON.stringify(updatedThemes));
+
+    if (editId !== null) {
+      // Edit existing theme
+      const updatedThemes = themes.map(theme =>
+        theme.id === editId
+          ? { ...theme, name: e.target.name.value, ...colors }
+          : theme
+      );
+      setThemes(updatedThemes);
+      localStorage.setItem("themes", JSON.stringify(updatedThemes));
+      setEditId(null);
+      e.target.name.value = "";
+    } else {
+      // Create new theme
+      const newTheme = {
+        id: Date.now(),
+        name: e.target.name.value,
+        ...colors
+      };
+      const updatedThemes = [...themes, newTheme];
+      setThemes(updatedThemes);
+      localStorage.setItem("themes", JSON.stringify(updatedThemes));
+      e.target.name.value = "";
+    }
+
+    // Reset form
+    setColors({
+      foreground: "#000000",
+      background: "#ffffff",
+      buttonBackground: "#00C4FF",
+      buttonHover: "#FF4E88",
+      buttonText: "#ffffff",
+      linkColor: "#00C4FF",
+      linkClickedColor: "#FF4E88"
+    });
   }
 
   const deleteTheme = (id) => {
@@ -53,6 +98,28 @@ const page = () => {
     }
   }
 
+  // Edit theme functionality
+  const [editId, setEditId] = useState(null);
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
+
+  const openEdit = (theme) => {
+    setEditId(theme.id);
+    setColors({
+      foreground: theme.foreground || "#000000",
+      background: theme.background || "#ffffff",
+      buttonBackground: theme.buttonBackground || "#00C4FF",
+      buttonHover: theme.buttonHover || "#FF4E88",
+      buttonText: theme.buttonText || "#ffffff",
+      linkColor: theme.linkColor || "#00C4FF",
+      linkClickedColor: theme.linkClickedColor || "#FF4E88"
+    });
+    // Set the name input value via form field
+    const nameInput = document.querySelector('input[name="name"]');
+    if (nameInput) {
+      nameInput.value = theme.name;
+    }
+  };
+
   return (
     <div className='bg-gradient-to-t from-[#00C4FF] via-[#FF4E88] to-[#FF4E88] backdrop-blur-xs w-full h-screen'>
       <div className='bg-[url(/ctm_bg.png)] w-full h-full bg-cover bg-center bg-no-repeat backdrop-blur-xl opacity-25 absolute inset-0'></div>
@@ -68,40 +135,103 @@ const page = () => {
         <div className='relative flex justify-between px-5 gap-5'>
           <div className='flex flex-wrap px-4 gap-3 py-4 overflow-y-auto w-1/2 bg-[#00C4FF]/50 rounded-xl'>
             {themes?.map((theme, index) => (
-              <div key={index} style={{ backgroundColor: theme.background, color: theme.foreground }} className='p-4 rounded flex justify-between items-center gap-3 w-[49%]'>
+              <div key={theme.id || index} style={{ backgroundColor: theme.background, color: theme.foreground }} className='p-4 rounded flex justify-between items-center gap-3 w-[49%]'>
                 <div>
                   <h2>{theme.name}</h2>
                   <p>Foreground: {theme.foreground}</p>
                   <p>Background: {theme.background}</p>
                 </div>
-                <div className='cursor-pointer' onClick={() => {setWarningOpen(prev => !prev); setDeleteId(theme.id)}}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-eraser-icon lucide-eraser"><path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"/><path d="m5.082 11.09 8.828 8.828"/></svg>
+                <div className='flex gap-3'>
+                  <div className='cursor-pointer' onClick={() => openEdit(theme)}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-brush-icon lucide-brush"><path d="m11 10 3 3"/><path d="M6.5 21A3.5 3.5 0 1 0 3 17.5a2.62 2.62 0 0 1-.708 1.792A1 1 0 0 0 3 21z"/><path d="M9.969 17.031 21.378 5.624a1 1 0 0 0-3.002-3.002L6.967 14.031"/></svg>
+                  </div>
+                  <div className='cursor-pointer' onClick={() => {setWarningOpen(prev => !prev); setDeleteId(theme.id)}}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-eraser-icon lucide-eraser"><path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"/><path d="m5.082 11.09 8.828 8.828"/></svg>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
-          <div className='flex justify-around w-1/2 bg-[#00C4FF]/50 rounded-xl'>
+          <div className='flex justify-around w-1/2 bg-[#00C4FF]/50 rounded-xl pb-2'>
             <form onSubmit={saveTheme} className='flex justify-center items-center flex-col gap-4'>
+              <h2 className='text-2xl font-bold text-[#FF4E88]'>
+                {editId !== null ? `Theme bearbeiten` : 'Theme erstellen'}
+              </h2>
               <div className='flex items-center gap-3'>
                 <label className='text-[#FF4E88] text-xl font-bold'>theme name</label>
                 <input type="text" name="name" className='h-8 w-64 pl-2 bg-[#00C4FF] rounded-md outline-none focus:ring-2 focus:ring-[#FF4E88] text-[#FF4E88]' required/>
               </div>
               <div className='flex items-center gap-3'>
                 <label className='text-[#FF4E88] text-xl font-bold'>foreground color</label>
-                <input type="color" name="foreground" value={foreground} onChange={(e) => setForeground(e.target.value)} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+                <input type="color" name="foreground" value={colors.foreground} onChange={(e) => setColors({...colors, foreground: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
               </div>
               <div className='flex items-center gap-3'>
                 <label className='text-[#FF4E88] text-xl font-bold'>background color</label>
-                <input type="color" name="background" value={background} onChange={(e) => setBackground(e.target.value)} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+                <input type="color" name="background" value={colors.background} onChange={(e) => setColors({...colors, background: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
               </div>
-              <button className='bg-[#00C4FF] hover:bg-[#FF4E88] transition-colors duration-400 ease-in-out text-white px-4 py-2 rounded cursor-pointer'>Save Theme</button>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>button background color</label>
+                <input type="color" name="buttonBackground" value={colors.buttonBackground} onChange={(e) => setColors({...colors, buttonBackground: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>button hover color</label>
+                <input type="color" name="buttonHover" value={colors.buttonHover} onChange={(e) => setColors({...colors, buttonHover: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>button text color</label>
+                <input type="color" name="buttonText" value={colors.buttonText} onChange={(e) => setColors({...colors, buttonText: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>link color</label>
+                <input type="color" name="linkColor" value={colors.linkColor} onChange={(e) => setColors({...colors, linkColor: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex items-center gap-3'>
+                <label className='text-[#FF4E88] text-xl font-bold'>link visited text color</label>
+                <input type="color" name="linkClickedColor" value={colors.linkClickedColor} onChange={(e) => setColors({...colors, linkClickedColor: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]'/>
+              </div>
+              <div className='flex gap-2'>
+                <button type="submit" className='bg-[#00C4FF] hover:bg-[#FF4E88] transition-colors duration-400 ease-in-out text-white px-4 py-2 rounded cursor-pointer'>
+                  {editId !== null ? 'Theme aktualisieren' : 'Theme speichern'}
+                </button>
+                {editId !== null && (
+                  <button type="button" onClick={() => {
+                    setEditId(null);
+                    setColors({
+                      foreground: "#000000",
+                      background: "#ffffff",
+                      buttonBackground: "#00C4FF",
+                      buttonHover: "#FF4E88",
+                      buttonText: "#ffffff"
+                    });
+                    document.querySelector('input[name="name"]').value = "";
+                  }} className='bg-gray-400 hover:bg-gray-500 transition-colors duration-400 ease-in-out text-white px-4 py-2 rounded cursor-pointer'>
+                    Abbrechen
+                  </button>
+                )}
+              </div>
             </form>
             <div className='w-[40%] h-[90%] my-auto'>
-              <div className="p-4 rounded-xl h-full w-full flex justify-center items-center" style={{ backgroundColor: background, color: foreground }}>
+              <div className="p-4 rounded-xl h-full w-full flex justify-center items-center" style={{ backgroundColor: colors.background, color: colors.foreground }}>
                 <h2 className='text-6xl font-bold'>Preview</h2>
               </div>
             </div>
           </div>
+        </div>
+        <div className="flex items-center justify-center h-screen flex-col mt-5" style={{ color: colors.foreground, backgroundColor: colors.background }}>
+          <h1 className="text-xl mb-2">Header</h1>
+          <p className="text-center">This is a little text, <br /> on multiple lines</p>
+          <button
+            className="px-4 p-2 my-1 rounded-md"
+            onMouseEnter={() => setIsButtonHovered(true)}
+            onMouseLeave={() => setIsButtonHovered(false)}
+            style={{
+              backgroundColor: isButtonHovered ? colors.buttonHover : colors.buttonBackground,
+              color: colors.buttonText,
+              transition: 'background-color 0.2s ease'
+            }}>
+              This is a Button
+            </button>
+          <a href="" style={{ color: colors.linkColor }} className="hover:underline">Link</a>
         </div>
       </div>
     </div>
