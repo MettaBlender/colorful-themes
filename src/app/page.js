@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -6,7 +7,7 @@ export default function Home() {
       <h1 className="text-xl mb-2">Header</h1>
       <p className="text-center">This is a little text, <br /> on multiple lines</p>
       <button className="px-4 p-2 my-1 rounded-md">This is a Button</button>
-      <a href="" className="visited:text-green-50">Link</a>
+      <Link href="" className="visited:text-green-50">Link</Link>
       <div className="flex mt-1 w-full border border-white border-x-0 justify-around">
         <div className="w-[4%] h-auto aspect-square ring ring-white bg-background"/>
         <div className="w-[4%] h-auto aspect-square ring ring-white bg-background-tertiary"/>

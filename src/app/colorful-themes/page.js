@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
 const page = () => {
@@ -181,7 +182,7 @@ const page = () => {
   };
 
   return (
-    <div className='bg-gradient-to-t from-[#00C4FF] via-[#FF4E88] to-[#FF4E88] backdrop-blur-xs w-full h-screen'>
+    <div className='bg-gradient-to-t from-[#00C4FF] via-[#FF4E88] to-[#FF4E88] backdrop-blur-xs w-full'>
       <div className='bg-[url(/ctm_bg.png)] w-full h-full bg-cover bg-center bg-no-repeat backdrop-blur-xl opacity-25 absolute inset-0'></div>
       <span onClick={goBack} className='font-bold text-4xl text-[#00C4FF] fixed left-6 top-4 cursor-pointer z-30'>&larr;</span>
       {warningOpen && <div className='fixed w-screen h-screen backdrop-blur-xs flex justify-center items-center z-20' onClick={() => setWarningOpen(false)}>
@@ -351,7 +352,7 @@ const page = () => {
             }}>
               This is a Button
             </button>
-          <a href="" style={{ color: colors.linkColor }} className="hover:underline">Link</a>
+          <Link href="" style={{ color: colors.linkColor }} className="hover:underline">Link</Link>
         </div>
       </div>
     </div>
