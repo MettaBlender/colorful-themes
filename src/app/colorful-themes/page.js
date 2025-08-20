@@ -192,8 +192,24 @@ const page = () => {
   const handleWizard = (e) => {
     e.preventDefault();
     const newColors = getWizardColors(wizardColors.foreground, wizardColors.background);
-    setColors(newColors);
-    saveTheme(e);
+
+    // Create new theme directly without calling saveTheme
+    const newTheme = {
+      id: Date.now(),
+      name: e.target.name.value,
+      ...newColors
+    };
+
+    const updatedThemes = [...themes, newTheme];
+    setThemes(updatedThemes);
+    localStorage.setItem("themes", JSON.stringify(updatedThemes));
+
+    // Reset wizard form
+    e.target.name.value = "";
+    setWizardColors({
+      foreground: "#000000",
+      background: "#ffffff"
+    });
     setOpenWizard(false);
   }
 

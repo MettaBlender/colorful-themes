@@ -40,6 +40,11 @@ export default function getContrastRatio(hex1, hex2) {
 
 // Konvertiert RGB in HSL
 export function rgbToHsl(r, g, b) {
+  // Normalisiere RGB-Werte auf 0-1 Bereich
+  r /= 255;
+  g /= 255;
+  b /= 255;
+
   const max = Math.max(r, g, b);
   const min = Math.min(r, g, b);
   let h, s, l = (max + min) / 2;
@@ -144,9 +149,40 @@ export function getWizardColors(foreground, background) {
     borderSecondary: "#E5E7EB"
   };
 
-  colors.foregroundSecondary = hslToHex(hexToHsl(colors.foreground).h, hexToHsl(colors.foreground).s, hexToHsl(colors.foreground).l + 10);
-  colors.foregroundTertiary = hslToHex(hexToHsl(colors.foreground).h, hexToHsl(colors.foreground).s, hexToHsl(colors.foreground).l + 20);
+  // Get HSL values for the foreground color
+  const foregroundHsl = hexToHsl(colors.foreground);
 
+  console.log("Foreground HSL:", foregroundHsl);
+
+  // Intelligente Helligkeitsanpassung basierend auf der ursprünglichen Helligkeit
+  let secondaryLightness, tertiaryLightness;
+
+  if (foregroundHsl.l <= 30) {
+    // Sehr dunkle Farben: Kleine Schritte, um nicht zu hell zu werden
+    secondaryLightness = Math.min(100, foregroundHsl.l + 10);
+    tertiaryLightness = Math.min(100, foregroundHsl.l + 20);
+  } else if (foregroundHsl.l <= 60) {
+    // Mittlere Helligkeit: Moderate Schritte
+    secondaryLightness = Math.min(100, foregroundHsl.l + 15);
+    tertiaryLightness = Math.min(100, foregroundHsl.l + 30);
+  } else {
+    // Bereits helle Farben: Reduziere Sättigung statt Helligkeit zu erhöhen
+    secondaryLightness = foregroundHsl.l;
+    tertiaryLightness = foregroundHsl.l;
+
+    // Reduziere Sättigung für hellere Varianten
+    const secondarySaturation = Math.max(0, foregroundHsl.s - 20);
+    const tertiarySaturation = Math.max(0, foregroundHsl.s - 40);
+
+    colors.foregroundSecondary = hslToHex(foregroundHsl.h, secondarySaturation, secondaryLightness);
+    colors.foregroundTertiary = hslToHex(foregroundHsl.h, tertiarySaturation, tertiaryLightness);
+
+    console.log("Generated colors:", colors);
+    return colors;
+  }
+
+  colors.foregroundSecondary = hslToHex(foregroundHsl.h, foregroundHsl.s, secondaryLightness);
+  colors.foregroundTertiary = hslToHex(foregroundHsl.h, foregroundHsl.s, tertiaryLightness);
 
   console.log("Generated colors:", colors);
 
