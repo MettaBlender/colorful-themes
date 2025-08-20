@@ -3,6 +3,7 @@
 import ColorCircle from '@/components/colorCircle'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import getContrastRatio, {getWizardColors} from '@/components/wizardFunctions'
 
 const page = () => {
 
@@ -71,7 +72,6 @@ const page = () => {
   useEffect(() => {
     // Load saved colors from localStorage
     const savedThemes = localStorage.getItem("themes");
-    console.log("themes", savedThemes);
     if (savedThemes) {
       const parsedThemes = JSON.parse(savedThemes);
       // Ensure all themes have an id
@@ -189,6 +189,14 @@ const page = () => {
     }
   };
 
+  const handleWizard = (e) => {
+    e.preventDefault();
+    const newColors = getWizardColors(wizardColors.foreground, wizardColors.background);
+    setColors(newColors);
+    saveTheme(e);
+    setOpenWizard(false);
+  }
+
   const toggleOpen = (themeId) => {
     setOpenStates((prev) => ({
       ...prev,
@@ -211,7 +219,11 @@ const page = () => {
             <p>This wizard helps you create a nice theme. Choose a foreground and a background color and the 🧙‍♂️ will create the other colors for you!</p>
           </div>
           <div className='w-full flex'>
-            <form className='pl-4 flex flex-col gap-3 mt-2 w-1/2'>
+            <form className='pl-4 flex flex-col gap-3 mt-2 w-1/2' onSubmit={handleWizard}>
+              <div className='flex items-center gap-3'>
+                <label className='text-xl font-bold'>theme name</label>
+                <input type="text" name="name" className='h-8 w-32 pl-2 rounded-md outline-none ring ring-focus-ring' required/>
+              </div>
               <div className='flex items-center gap-3'>
                 <label className='text-xl font-bold'>foreground color</label>
                 <input type="color" name="foreground" value={wizardColors.foreground} onChange={(e) => setWizardColors({...wizardColors, foreground: e.target.value})} className='h-8 w-16 focus:ring-2 focus:ring-[#FF4E88]' onClick={(e) => e.stopPropagation()}/>
@@ -227,7 +239,7 @@ const page = () => {
                 <div className='w-32 h-32 rounded-lg rounded-r-none' style={{ backgroundColor: wizardColors.background }} />
                 <div className='w-32 h-32 rounded-lg rounded-l-none' style={{ backgroundColor: wizardColors.foreground }} />
               </div>
-              <p>Kontrast: 1:2</p>
+              <p>Kontrast: {getContrastRatio(wizardColors.foreground, wizardColors.background).toFixed(1)} : 1</p>
             </div>
           </div>
         </div>
