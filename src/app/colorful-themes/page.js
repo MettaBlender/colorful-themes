@@ -59,6 +59,7 @@ const page = () => {
 
   const [warningOpen, setWarningOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  const [openStates, setOpenStates] = useState({});
 
   useEffect(() => {
     // Load saved colors from localStorage
@@ -181,6 +182,13 @@ const page = () => {
     }
   };
 
+  const toggleOpen = (themeId) => {
+    setOpenStates((prev) => ({
+      ...prev,
+      [themeId]: !prev[themeId], // Umschalten des Zustands für die gegebene ID
+    }));
+  };
+
   return (
     <div className='bg-gradient-to-t from-[#00C4FF] via-[#FF4E88] to-[#FF4E88] backdrop-blur-xs w-full'>
       <div className='bg-[url(/ctm_bg.png)] w-full h-full bg-cover bg-center bg-no-repeat backdrop-blur-xl opacity-25 absolute inset-0'></div>
@@ -193,27 +201,55 @@ const page = () => {
       </div>}
       <div className='relative z-10 w-full h-full'>
         <h1 className='text-center w-full text-6xl mb-6 pt-2 font-bold text-[#00C4FF]'>Colorful themes manager</h1>
-        <div className='relative flex justify-between px-5 gap-5'>
-          <div className='flex flex-wrap px-4 gap-3 py-4 overflow-y-auto w-1/2 bg-[#00C4FF]/50 rounded-xl'>
+        <div className='relative flex flex-col justify-between px-5 gap-5'>
+          <div className='flex flex-wrap px-4 gap-3 py-4 overflow-y-auto w-full bg-[#00C4FF]/50 rounded-xl'>
             {themes?.map((theme, index) => (
-              <div key={theme.id || index} style={{ backgroundColor: theme.background, color: theme.foreground }} className='p-4 rounded flex justify-between items-center gap-3 w-[49%]'>
-                <div>
-                  <h2>{theme.name}</h2>
-                  <p>Foreground: {theme.foreground}</p>
-                  <p>Background: {theme.background}</p>
+              <div key={theme.id || index} style={{ backgroundColor: theme.background, color: theme.foreground }} className='p-4 rounded flexflex-col justify-between items-center gap-3 w-[32%]'>
+                <div className='flex justify-between items-center w-full'>
+                  <div>
+                    <h2>{theme.name}</h2>
+                    <p className='flex items-center'>Foreground: {theme.foreground} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.foreground }} /></p>
+                    <p className='flex items-center'>Background: {theme.background} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.background }} /></p>
+                    {openStates[theme.id] && (
+                      <>
+                        <p className='flex items-center'>ForegroundSecondary: {theme.foregroundSecondary} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.foregroundSecondary }} /></p>
+                        <p className='flex items-center'>BackgroundSecondary: {theme.backgroundSecondary} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.backgroundSecondary }} /></p>
+                        <p className='flex items-center'>ForegroundTertiary: {theme.foregroundTertiary} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.foregroundTertiary }} /></p>
+                        <p className='flex items-center'>BackgroundTertiary: {theme.backgroundTertiary} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.backgroundTertiary }} /></p>
+                        <p className='flex items-center'>Button Background: {theme.buttonBackground} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.buttonBackground }} /></p>
+                        <p className='flex items-center'>Button Text: {theme.buttonText} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.buttonText }} /></p>
+                        <p className='flex items-center'>Button Hover: {theme.buttonHover} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.buttonHover }} /></p>
+                        <p className='flex items-center'>Link: {theme.linkColor} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.linkColor }} /></p>
+                        <p className='flex items-center'>Link clicked: {theme.linkClickedColor} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.linkClickedColor }} /></p>
+                        <p className='flex items-center'>accent: {theme.accentPrimary} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.accentPrimary }} /></p>
+                        <p className='flex items-center'>accent Secondary: {theme.accentSecondary} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.accentSecondary }} /></p>
+                        <p className='flex items-center'>accent Tertiary: {theme.accentTertiary} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.accentTertiary }} /></p>
+                        <p className='flex items-center'>accent Quaternary: {theme.accentQuaternary} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.accentQuaternary }} /></p>
+                        <p className='flex items-center'>focus Ring: {theme.focusRing} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.focusRing }} /></p>
+                        <p className='flex items-center'>error: {theme.error} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.error }} /></p>
+                        <p className='flex items-center'>warning: {theme.warning} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.warning }} /></p>
+                        <p className='flex items-center'>success: {theme.success} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.success }} /></p>
+                        <p className='flex items-center'>border: {theme.borderPrimary} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.borderPrimary }} /></p>
+                        <p className='flex items-center'>border Secondary: {theme.borderSecondary} <div className='ml-4 w-4 h-auto aspect-square rounded-xs' style={{ backgroundColor: theme.borderSecondary }} /></p>
+                      </>
+                    )}
+                  </div>
+                  <div className='flex gap-3'>
+                    <div className='cursor-pointer' onClick={() => openEdit(theme)}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-brush-icon lucide-brush"><path d="m11 10 3 3"/><path d="M6.5 21A3.5 3.5 0 1 0 3 17.5a2.62 2.62 0 0 1-.708 1.792A1 1 0 0 0 3 21z"/><path d="M9.969 17.031 21.378 5.624a1 1 0 0 0-3.002-3.002L6.967 14.031"/></svg>
+                    </div>
+                    <div className='cursor-pointer' onClick={() => {setWarningOpen(prev => !prev); setDeleteId(theme.id)}}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-eraser-icon lucide-eraser"><path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"/><path d="m5.082 11.09 8.828 8.828"/></svg>
+                    </div>
+                  </div>
                 </div>
-                <div className='flex gap-3'>
-                  <div className='cursor-pointer' onClick={() => openEdit(theme)}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-brush-icon lucide-brush"><path d="m11 10 3 3"/><path d="M6.5 21A3.5 3.5 0 1 0 3 17.5a2.62 2.62 0 0 1-.708 1.792A1 1 0 0 0 3 21z"/><path d="M9.969 17.031 21.378 5.624a1 1 0 0 0-3.002-3.002L6.967 14.031"/></svg>
-                  </div>
-                  <div className='cursor-pointer' onClick={() => {setWarningOpen(prev => !prev); setDeleteId(theme.id)}}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-eraser-icon lucide-eraser"><path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"/><path d="m5.082 11.09 8.828 8.828"/></svg>
-                  </div>
+                <div className='w-full flex justify-center items-end cursor-pointer' onClick={() => toggleOpen(theme.id)}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`lucide lucide-chevron-down transform transition-transform duration-300 ${openStates[theme.id] ? 'rotate-180' : ''}`}><path d="m6 9 6 6 6-6"/></svg>
                 </div>
               </div>
             ))}
           </div>
-          <div className='flex justify-around w-1/2 bg-[#00C4FF]/50 rounded-xl pb-2'>
+          <div className='flex justify-around w-full bg-[#00C4FF]/50 rounded-xl pb-2'>
             <form onSubmit={saveTheme} className='flex justify-center items-center flex-col gap-4'>
               <h2 className='text-2xl font-bold text-[#FF4E88]'>
                 {editId !== null ? `Theme bearbeiten` : 'Theme erstellen'}
