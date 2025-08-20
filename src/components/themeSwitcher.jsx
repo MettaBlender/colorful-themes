@@ -129,7 +129,7 @@ const ThemeSwitcher = ({className}) => {
   };
 
   return (
-    <select className={`fixed top-2 right-2 bg-[#00C4FF] p-2 rounded z-20 overflow-y-auto h-10 text-[#FF4E88] ${className}`} onChange={toggleTheme} value={theme}>
+    <select className={`fixed top-2 right-2 p-2 rounded z-20 overflow-y-auto h-10 bg-background-secondary hover:bg-background hover:ring hover:ring-background-secondary text-foreground-secondary hover:text-foreground transition-colors cursor-pointer ${className}`} onChange={toggleTheme} value={theme}>
       {themes?.map((theme, index) => (
         <option key={index} style={{ backgroundColor: theme.background, color: theme.foreground }} value={theme.name}>{theme.name}</option>
       ))}
