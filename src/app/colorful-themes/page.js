@@ -449,6 +449,11 @@ const page = () => {
           <div className="flex items-center justify-center h-screen flex-col mt-5" style={{ color: colors.foreground, backgroundColor: colors.background }}>
             <h1 className="text-xl mb-2">Header</h1>
             <p className="text-center">This is a little text, <br /> on multiple lines</p>
+            <div className='flex gap-2'>
+                  <div className='w-24 h-8 rounded-md px-2 py-1' style={{backgroundColor: colors.error}}>Error</div>
+                  <div className='w-24 h-8 rounded-md px-2 py-1' style={{backgroundColor: colors.warning}}>Warning</div>
+                  <div className='w-24 h-8 rounded-md px-2 py-1' style={{backgroundColor: colors.success}}>Success</div>
+            </div>
             <button
               className="px-4 p-2 my-1 rounded-md"
               onMouseEnter={() => setIsButtonHovered(true)}

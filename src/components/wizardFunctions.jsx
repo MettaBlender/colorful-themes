@@ -14,6 +14,14 @@ export function hexToRgb(hex) {
   return { r, g, b };
 }
 
+export function rgbToHex(r, g, b) {
+  const toHex = (value) => {
+    const hex = value.toString(16);
+    return hex.length === 1 ? '0' + hex : hex;
+  };
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+}
+
 // Funktion zur Berechnung der relativen Luminanz
 export function getLuminance({ r, g, b }) {
   // Linearisiere RGB-Werte (0–1)
@@ -123,6 +131,19 @@ export function hslToHex(h, s, l) {
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 }
 
+export function generateColor(ground, reference){
+  const groundHsl = hexToHsl(ground);
+  const referenceHsl = hexToHsl(reference);
+
+  const newHsl = {
+    h: referenceHsl.h,
+    s: (groundHsl.s + referenceHsl.s) / 2,
+    l: (groundHsl.l + referenceHsl.l) / 2
+  }
+
+  return hslToHex(newHsl.h, newHsl.s, newHsl.l);
+}
+
 export function getWizardColors(foreground, background) {
   let colors = {
     foreground: foreground,
@@ -152,39 +173,88 @@ export function getWizardColors(foreground, background) {
   // Get HSL values for the foreground color
   const foregroundHsl = hexToHsl(colors.foreground);
 
-  console.log("Foreground HSL:", foregroundHsl);
-
   // Intelligente Helligkeitsanpassung basierend auf der ursprünglichen Helligkeit
-  let secondaryLightness, tertiaryLightness;
+  let secondaryLightness, tertiaryLightness, secondarySaturation, tertiarySaturation;
 
   if (foregroundHsl.l <= 30) {
     // Sehr dunkle Farben: Kleine Schritte, um nicht zu hell zu werden
     secondaryLightness = Math.min(100, foregroundHsl.l + 10);
     tertiaryLightness = Math.min(100, foregroundHsl.l + 20);
+
+    secondarySaturation = foregroundHsl.s;
+    tertiarySaturation = foregroundHsl.s;
   } else if (foregroundHsl.l <= 60) {
     // Mittlere Helligkeit: Moderate Schritte
     secondaryLightness = Math.min(100, foregroundHsl.l + 15);
     tertiaryLightness = Math.min(100, foregroundHsl.l + 30);
+
+    secondarySaturation = foregroundHsl.s;
+    tertiarySaturation = foregroundHsl.s;
   } else {
     // Bereits helle Farben: Reduziere Sättigung statt Helligkeit zu erhöhen
     secondaryLightness = foregroundHsl.l;
     tertiaryLightness = foregroundHsl.l;
 
     // Reduziere Sättigung für hellere Varianten
-    const secondarySaturation = Math.max(0, foregroundHsl.s - 20);
-    const tertiarySaturation = Math.max(0, foregroundHsl.s - 40);
+    secondarySaturation = Math.max(0, foregroundHsl.s - 20);
+    tertiarySaturation = Math.max(0, foregroundHsl.s - 40);
 
-    colors.foregroundSecondary = hslToHex(foregroundHsl.h, secondarySaturation, secondaryLightness);
-    colors.foregroundTertiary = hslToHex(foregroundHsl.h, tertiarySaturation, tertiaryLightness);
-
-    console.log("Generated colors:", colors);
-    return colors;
   }
 
-  colors.foregroundSecondary = hslToHex(foregroundHsl.h, foregroundHsl.s, secondaryLightness);
-  colors.foregroundTertiary = hslToHex(foregroundHsl.h, foregroundHsl.s, tertiaryLightness);
+  colors.foregroundSecondary = hslToHex(foregroundHsl.h, secondarySaturation, secondaryLightness);
+  colors.foregroundTertiary = hslToHex(foregroundHsl.h, tertiarySaturation, tertiaryLightness);
 
-  console.log("Generated colors:", colors);
+
+  const backgroundHsl = hexToHsl(colors.background);
+
+  if (backgroundHsl.l >= 60) {
+    // Sehr dunkle Farben: Kleine Schritte, um nicht zu hell zu werden
+    secondaryLightness = Math.min(100, backgroundHsl.l - 15);
+    tertiaryLightness = Math.min(100, backgroundHsl.l - 30);
+
+    secondarySaturation = backgroundHsl.s;
+    tertiarySaturation = backgroundHsl.s;
+  } else if (backgroundHsl.l >= 30) {
+    // Mittlere Helligkeit: Moderate Schritte
+    secondaryLightness = Math.min(100, backgroundHsl.l - 10);
+    tertiaryLightness = Math.min(100, backgroundHsl.l - 20);
+
+    secondarySaturation = backgroundHsl.s;
+    tertiarySaturation = backgroundHsl.s;
+  } else {
+    // Bereits helle Farben: Reduziere Sättigung statt Helligkeit zu erhöhen
+    secondaryLightness = backgroundHsl.l;
+    tertiaryLightness = backgroundHsl.l;
+
+    // Reduziere Sättigung für hellere Varianten
+    secondarySaturation = Math.max(0, backgroundHsl.s + 20);
+    tertiarySaturation = Math.max(0, backgroundHsl.s + 40);
+  }
+
+  colors.backgroundSecondary = hslToHex(backgroundHsl.h, secondarySaturation, secondaryLightness);
+  colors.backgroundTertiary = hslToHex(backgroundHsl.h, tertiarySaturation, tertiaryLightness);
+
+
+  // colors.error = rgbToHex(Math.max(70, (backgroundHsl.l / 255).toFixed(0) + 2), 0, 0);
+  // colors.warning = rgbToHex(Math.max(70, (backgroundHsl.l / 255).toFixed(0) + 2), Math.max(70, (backgroundHsl.l / 255).toFixed(0) + 2), 0);
+  // colors.success = rgbToHex(0, Math.max(70, (backgroundHsl.l / 255).toFixed(0) + 2), 0);
+  colors.error = generateColor(colors.background, "#ff0000");
+  colors.warning = generateColor(colors.background, "#ff9500");
+  colors.success = generateColor(colors.background, "#00ff00");
+
+  colors.buttonBackground = colors.foreground;
+  colors.buttonText = colors.background;
+  colors.buttonHover = colors.foregroundTertiary;
+
+  const foregroundSecondaryHsl = hexToHsl(colors.foregroundSecondary);
+
+  colors.linkColor = colors.foregroundSecondary
+  colors.linkClickedColor = hslToHex(foregroundSecondaryHsl.h, Math.max(0, foregroundSecondaryHsl.s - 20), foregroundSecondaryHsl.l);
+
+  colors.accentPrimary = colors.foreground;
+  colors.accentSecondary = generateColor(colors.background, "#ff99bb");
+  colors.accentTertiary = generateColor(colors.background, "#ff4e88");
+  colors.accentQuaternary = generateColor(colors.background, "#66e0ff");
 
   return colors;
 }
