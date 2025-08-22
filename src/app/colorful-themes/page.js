@@ -69,6 +69,7 @@ const page = () => {
   const [openStates, setOpenStates] = useState({});
   const [openWizard, setOpenWizard] = useState(false);
   const [downloadOpen, setDownloadOpen] = useState(false);
+  const [downloadMode, setDownloadMode] = useState('css');
 
   useEffect(() => {
     // Load saved colors from localStorage
@@ -142,6 +143,7 @@ const page = () => {
     const updatedThemes = themes.filter(theme => theme.id !== id);
     setThemes(updatedThemes);
     localStorage.setItem("themes", JSON.stringify(updatedThemes));
+    setWarningOpen(false);
   }
 
   const goBack = () => {
@@ -221,10 +223,93 @@ const page = () => {
     }));
   };
 
+  const code = () => {
+    const theme = themes.find(theme => theme.id === deleteId);
+    if (!theme) return "Theme not found";
+    if (downloadMode === "css") {
+      return `:root {
+  --foreground: ${theme.foreground};
+  --foreground-secondary: ${theme.foregroundSecondary};
+  --foreground-tertiary: ${theme.foregroundTertiary};
+  --background: ${theme.background};
+  --background-secondary: ${theme.backgroundSecondary};
+  --background-tertiary: ${theme.backgroundTertiary};
+  --button-background: ${theme.buttonBackground};
+  --button-hover: ${theme.buttonHover};
+  --button-text: ${theme.buttonText};
+  --link-color: ${theme.linkColor};
+  --link-clicked-color: ${theme.linkClickedColor};
+  --accent-primary: ${theme.accentPrimary};
+  --accent-secondary: ${theme.accentSecondary};
+  --accent-tertiary: ${theme.accentTertiary};
+  --accent-quaternary: ${theme.accentQuaternary};
+  --focus-ring: ${theme.focusRing};
+  --hover: ${theme.hover};
+  --error: ${theme.error};
+  --warning: ${theme.warning};
+  --success: ${theme.success};
+  --border-primary: ${theme.borderPrimary};
+  --border-secondary: ${theme.borderSecondary};
+}`;
+    } else {
+      return `:root {
+  --foreground: ${theme.foreground};
+  --foreground-secondary: ${theme.foregroundSecondary};
+  --foreground-tertiary: ${theme.foregroundTertiary};
+  --background: ${theme.background};
+  --background-secondary: ${theme.backgroundSecondary};
+  --background-tertiary: ${theme.backgroundTertiary};
+  --button-background: ${theme.buttonBackground};
+  --button-hover: ${theme.buttonHover};
+  --button-text: ${theme.buttonText};
+  --link-color: ${theme.linkColor};
+  --link-clicked-color: ${theme.linkClickedColor};
+  --accent-primary: ${theme.accentPrimary};
+  --accent-secondary: ${theme.accentSecondary};
+  --accent-tertiary: ${theme.accentTertiary};
+  --accent-quaternary: ${theme.accentQuaternary};
+  --focus-ring: ${theme.focusRing};
+  --hover: ${theme.hover};
+  --error: ${theme.error};
+  --warning: ${theme.warning};
+  --success: ${theme.success};
+  --border-primary: ${theme.borderPrimary};
+  --border-secondary: ${theme.borderSecondary};
+}
+
+@theme {
+  --color-background: ${theme.background};
+  --color-foreground: ${theme.foreground};
+  --color-background-secondary: ${theme.backgroundSecondary};
+  --color-foreground-secondary: ${theme.foregroundSecondary};
+  --color-background-tertiary: ${theme.backgroundTertiary};
+  --color-foreground-tertiary: ${theme.foregroundTertiary};
+  --color-button-background: ${theme.buttonBackground};
+  --color-button-hover: ${theme.buttonHover};
+  --color-button-text: ${theme.buttonText};
+  --color-link: ${theme.linkColor};
+  --color-link-clicked: ${theme.linkClickedColor};
+  --color-hover: ${theme.hover};
+  --color-error: ${theme.error};
+  --color-warning: ${theme.warning};
+  --color-success: ${theme.success};
+  --color-border: ${theme.border};
+  --color-border-secondary: ${theme.borderSecondary};
+  --color-accent: ${theme.accent};
+  --color-accent-secondary: ${theme.accentSecondary};
+  --color-accent-tertiary: ${theme.accentTertiary};
+  --color-accent-quaternary: ${theme.accentQuaternary};
+  --color-focus-ring: ${theme.focusRing};
+}
+`;
+    }
+
+  }
+
   return (
     <>
       {warningOpen && <div className='fixed w-screen h-screen backdrop-blur-xs flex justify-center items-center z-20' onClick={() => setWarningOpen(false)}>
-        <div className='w-[40%] h-[30%] rounded-2xl p-4 bg-error text-white flex justify-center items-center flex-col gap-6'>
+        <div className='w-[40%] h-[30%] rounded-2xl p-4 bg-error text-white flex justify-center items-center flex-col gap-6' onClick={(e) => e.stopPropagation()}>
           <p className='text-3xl'>Do you want to delete this theme?</p>
           <button className='transition-colors duration-400 ease-in-out px-4 py-2 rounded cursor-pointer' onClick={() => deleteTheme(deleteId)}>Delete</button>
         </div>
@@ -262,9 +347,18 @@ const page = () => {
         </div>
       </div>}
       {downloadOpen && <div className='fixed w-screen h-screen backdrop-blur-xs flex justify-center items-center z-20' onClick={() => setDownloadOpen(false)}>
-        <div className='w-[40%] h-[30%] rounded-2xl p-4 bg-error text-white flex justify-center items-center flex-col gap-6'>
-          <p className='text-3xl'>Do you want to delete this theme?</p>
-          <button className='transition-colors duration-400 ease-in-out px-4 py-2 rounded cursor-pointer' onClick={() => deleteTheme(deleteId)}>Delete</button>
+        <div className='w-[40%] min-h-[30%] max-h-[70%] overflow-y-auto rounded-2xl p-4 bg-background-secondary text-white flex justify-start items-center flex-col gap-6' onClick={(e) => e.stopPropagation()}>
+          <p className='text-3xl'>Download the theme</p>
+          <select className='bg-background text-foreground px-2 py-1 rounded-md' value={downloadMode} onChange={(e) => setDownloadMode(e.target.value)}>
+            <option value="css">CSS Variables</option>
+            <option value="tailwind">Tailwind Theme</option>
+          </select>
+          <div className='cursor-pointer bg-background-tertiary px-2 py-1 rounded-md' onClick={() => navigator.clipboard.writeText(code())}>
+            Kopieren
+          </div>
+          <pre>
+            {code()}
+          </pre>
         </div>
       </div>}
       <div className='relative bg-gradient-to-b from-background via-background-secondary to-background-tertiary backdrop-blur-xs w-full'>
@@ -311,7 +405,7 @@ const page = () => {
                       <div className='cursor-pointer' onClick={() => {setWarningOpen(prev => !prev); setDeleteId(theme.id)}}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-eraser-icon lucide-eraser"><path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"/><path d="m5.082 11.09 8.828 8.828"/></svg>
                       </div>
-                      <div className='cursor-pointer' onClick={() => {setDownloadOpen(prev => !prev)}}>
+                      <div className='cursor-pointer' onClick={() => {setDownloadOpen(prev => !prev); setDeleteId(theme.id)}}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-download-icon lucide-download"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg>
                       </div>
                     </div>
