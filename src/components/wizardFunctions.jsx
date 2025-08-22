@@ -235,9 +235,6 @@ export function getWizardColors(foreground, background) {
   colors.backgroundTertiary = hslToHex(backgroundHsl.h, tertiarySaturation, tertiaryLightness);
 
 
-  // colors.error = rgbToHex(Math.max(70, (backgroundHsl.l / 255).toFixed(0) + 2), 0, 0);
-  // colors.warning = rgbToHex(Math.max(70, (backgroundHsl.l / 255).toFixed(0) + 2), Math.max(70, (backgroundHsl.l / 255).toFixed(0) + 2), 0);
-  // colors.success = rgbToHex(0, Math.max(70, (backgroundHsl.l / 255).toFixed(0) + 2), 0);
   colors.error = generateColor(colors.background, "#ff0000");
   colors.warning = generateColor(colors.background, "#ff9500");
   colors.success = generateColor(colors.background, "#00ff00");
@@ -251,10 +248,18 @@ export function getWizardColors(foreground, background) {
   colors.linkColor = colors.foregroundSecondary
   colors.linkClickedColor = hslToHex(foregroundSecondaryHsl.h, Math.max(0, foregroundSecondaryHsl.s - 20), foregroundSecondaryHsl.l);
 
-  colors.accentPrimary = colors.foreground;
-  colors.accentSecondary = generateColor(colors.background, "#ff99bb");
-  colors.accentTertiary = generateColor(colors.background, "#ff4e88");
-  colors.accentQuaternary = generateColor(colors.background, "#66e0ff");
+  colors.accentPrimary = hslToHex(foregroundHsl.h + 20, foregroundHsl.s, foregroundHsl.l);
+  colors.accentSecondary = hslToHex(foregroundHsl.h + 40, foregroundHsl.s, foregroundHsl.l);
+  colors.accentTertiary = hslToHex(foregroundHsl.h - 20, foregroundHsl.s, foregroundHsl.l);
+  colors.accentQuaternary = hslToHex(foregroundHsl.h - 40, foregroundHsl.s, foregroundHsl.l);
+
+  colors.borderPrimary = generateColor(colors.background, colors.foreground);
+  colors.borderSecondary = generateColor(colors.foreground, colors.background);
+
+  const buttonHsl = hexToHsl(colors.buttonBackground);
+
+  colors.hover = hslToHex(buttonHsl.h, buttonHsl.s, Math.min(100, buttonHsl.l + 5));
+  colors.focusRing = hslToHex(buttonHsl.h, buttonHsl.s, Math.max(0, buttonHsl.l - 10));
 
   return colors;
 }

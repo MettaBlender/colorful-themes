@@ -68,6 +68,7 @@ const page = () => {
   const [deleteId, setDeleteId] = useState(null);
   const [openStates, setOpenStates] = useState({});
   const [openWizard, setOpenWizard] = useState(false);
+  const [downloadOpen, setDownloadOpen] = useState(false);
 
   useEffect(() => {
     // Load saved colors from localStorage
@@ -260,6 +261,12 @@ const page = () => {
           </div>
         </div>
       </div>}
+      {downloadOpen && <div className='fixed w-screen h-screen backdrop-blur-xs flex justify-center items-center z-20' onClick={() => setDownloadOpen(false)}>
+        <div className='w-[40%] h-[30%] rounded-2xl p-4 bg-error text-white flex justify-center items-center flex-col gap-6'>
+          <p className='text-3xl'>Do you want to delete this theme?</p>
+          <button className='transition-colors duration-400 ease-in-out px-4 py-2 rounded cursor-pointer' onClick={() => deleteTheme(deleteId)}>Delete</button>
+        </div>
+      </div>}
       <div className='relative bg-gradient-to-b from-background via-background-secondary to-background-tertiary backdrop-blur-xs w-full'>
         <span onClick={goBack} className='font-bold text-4xl text-[#00C4FF] fixed left-6 top-4 cursor-pointer z-30'>&larr;</span>
         <div className='relative z-10 w-full h-full'>
@@ -303,6 +310,9 @@ const page = () => {
                       </div>
                       <div className='cursor-pointer' onClick={() => {setWarningOpen(prev => !prev); setDeleteId(theme.id)}}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-eraser-icon lucide-eraser"><path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"/><path d="m5.082 11.09 8.828 8.828"/></svg>
+                      </div>
+                      <div className='cursor-pointer' onClick={() => {setDownloadOpen(prev => !prev)}}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-download-icon lucide-download"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg>
                       </div>
                     </div>
                   </div>
@@ -466,6 +476,74 @@ const page = () => {
                 This is a Button
               </button>
             <Link href="" style={{ color: colors.linkColor }} className="hover:underline">Link</Link>
+            <div className="flex flex-wrap mt-1 w-1/2 border border-white border-x-0 justify-around gap-1">
+              <div className="w-[8%] h-auto aspect-square ring ring-white group" style={{ backgroundColor: colors.background }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Background</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group" style={{ backgroundColor: colors.backgroundSecondary }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Background Secondary</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group" style={{ backgroundColor: colors.backgroundTertiary }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Background Tertiary</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-pointer" style={{ backgroundColor: colors.foreground }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Foreground</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-pointer" style={{ backgroundColor: colors.foregroundSecondary }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Foreground Secondary</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-pointer" style={{ backgroundColor: colors.foregroundTertiary }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Foreground Tertiary</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-pointer" style={{ backgroundColor: colors.accentPrimary }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Accent</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-pointer" style={{ backgroundColor: colors.accentSecondary }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Accent Secondary</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-pointer" style={{ backgroundColor: colors.accentTertiary }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Accent Tertiary</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-pointer" style={{ backgroundColor: colors.accentQuaternary }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Accent Quaternary</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-pointer" style={{ backgroundColor: colors.buttonBackground }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Button Background</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-pointer" style={{ backgroundColor: colors.buttonText }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Button Text</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-pointer" style={{ backgroundColor: colors.buttonHover }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Button Hover</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-pointer" style={{ backgroundColor: colors.linkColor }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Link</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-pointer" style={{ backgroundColor: colors.linkClickedColor }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Link Clicked</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-pointer" style={{ backgroundColor: colors.hover }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Hover</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-pointer" style={{ backgroundColor: colors.borderPrimary }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Border</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-pointer" style={{ backgroundColor: colors.borderSecondary }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Border Secondary</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-pointer" style={{ backgroundColor: colors.focusRing }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Focus Ring</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-pointer" style={{ backgroundColor: colors.error }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Error</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-pointer" style={{ backgroundColor: colors.warning }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Warning</div>
+              </div>
+              <div className="w-[8%] h-auto aspect-square ring ring-white group cursor-default" style={{ backgroundColor: colors.success }}>
+                <div className="absolute px-2 py-1 rounded-sm hidden group-hover:block" style={{ backgroundColor: colors.background }}>Success</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
