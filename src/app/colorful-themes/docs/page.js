@@ -72,7 +72,10 @@ const page = () => {
       </pre>
       <div className='h-8'/>
       <p>
-        These are the variables that can be assigned in the Colorful themes manager.
+        These are the variables that can be assigned in the Colorful Themes manager.
+      </p>
+      <p>
+        If you create a theme, you can export it as CSS variables, Tailwind theme, or as JSON. The exported theme can be used in your own project. The JSON file can be imported back into Colorful Themes.
       </p>
       <div className='h-8'/>
     </div>

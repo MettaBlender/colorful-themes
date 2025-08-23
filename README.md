@@ -1,9 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎨 Colorful Themes
 
-## Getting Started
+A modern, intuitive color theme manager and generator built with Next.js and React. Create, manage, and export beautiful color schemes for your web applications with ease.
 
-First, run the development server:
+![Colorful Themes Banner](public/ctm_bg.png)
 
+## ✨ Features
+
+### 🎯 Theme Management
+- **Create Custom Themes**: Build your own color schemes with comprehensive color palettes
+- **Theme Wizard**: Intelligent theme generator that creates harmonious color schemes from just foreground and background colors
+- **Live Preview**: Real-time preview of your themes with sample UI components
+- **Import/Export**: Share themes via JSON format or export as CSS variables/Tailwind themes
+
+### 🎨 Color Tools
+- **Smart Color Generation**: Automatically generates complementary colors based on your base colors
+- **Contrast Ratio Calculator**: Built-in accessibility checker to ensure proper color contrast
+- **Color Harmony**: Advanced HSL-based color generation for visually pleasing palettes
+- **Multiple Export Formats**: CSS Variables, Tailwind CSS theme, or JSON
+
+### 🖥️ User Interface
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Intuitive Editor**: Easy-to-use color picker interface
+- **Theme Cards**: Visual representation of your saved themes
+- **Color Circles**: Organized color group visualization
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/MettaBlender/colorful-themes.git
+cd colorful-themes
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+3. Run the development server:
 ```bash
 npm run dev
 # or
@@ -14,23 +58,114 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 📖 Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Creating a New Theme
 
-## Learn More
+1. **Manual Creation**:
+   - Navigate to the theme manager
+   - Enter a theme name
+   - Customize each color property using the color pickers
+   - Save your theme
 
-To learn more about Next.js, take a look at the following resources:
+2. **Theme Wizard**:
+   - Click "Theme Wizard"
+   - Choose a foreground and background color
+   - Let the wizard generate a complete, harmonious color scheme
+   - Save the generated theme
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Exporting Themes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Export your themes in multiple formats:
 
-## Deploy on Vercel
+- **CSS Variables**: Ready-to-use CSS custom properties
+- **Tailwind Theme**: Tailwind CSS configuration format
+- **JSON**: Portable format for sharing or importing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Using Themes in Your Project
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### CSS Variables
+```css
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+  --background-secondary: #f3f4f6;
+  /* ... other variables */
+}
+```
+
+#### Tailwind CSS
+```css
+@theme {
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+  --color-background-secondary: #f3f4f6;
+  /* ... other variables */
+}
+```
+
+## 🎨 Available Color Variables
+
+### Standard Variables
+- `background`, `background-secondary`, `background-tertiary`
+- `foreground`, `foreground-secondary`, `foreground-tertiary`
+- `button-background`, `button-hover`, `button-text`
+- `link-color`, `link-clicked-color`
+- `accent-primary`, `accent-secondary`, `accent-tertiary`, `accent-quaternary`
+- `error`, `warning`, `success`
+- `border-primary`, `border-secondary`
+- `focus-ring`, `hover`
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 15.4.6
+- **Frontend**: React 19.1.0
+- **Styling**: Tailwind CSS 4
+- **Development**: ESLint, PostCSS
+- **Build Tool**: Turbopack (for development)
+
+## 📁 Project Structure
+
+```
+src/
+├── app/
+│   ├── globals.css
+│   ├── layout.js
+│   ├── page.js                    # Homepage with color palette preview
+│   └── colorful-themes/
+│       ├── page.js                # Main theme manager
+│       └── docs/
+│           └── page.js            # Documentation
+├── components/
+│   ├── colorCircle.jsx            # Color group visualization
+│   ├── colorInput.jsx             # Color picker input
+│   ├── themeCard.jsx              # Theme display card
+│   ├── themeSwitcher.jsx          # Theme selection component
+│   └── wizardFunctions.jsx        # Color generation algorithms
+└── lib/                           # Utility functions
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🔗 Links
+
+- [Documentation](./src/app/colorful-themes/docs/page.js)
+- [Live Demo](http://localhost:3000/colorful-themes) (when running locally)
+
+## 🙏 Acknowledgments
+
+- Built with [Next.js](https://nextjs.org/)
+- Styled with [Tailwind CSS](https://tailwindcss.com/)
+- Color theory and contrast calculations based on WCAG guidelines
+
+---
+
+Made with ❤️ for the developer community
