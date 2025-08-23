@@ -6,10 +6,10 @@ const GoToColorThemeManger = ({className}) => {
 
   const openColorThemeManager = () => {
     console.log("href", window.location.href)
-    if (window.location.href.includes('/colorful-themes')) {
+    if (window.location.href.includes('app/colorful-themes')) {
       window.history.back();
     } else {
-      window.location.href = 'app/colorful-themes';
+      window.location.href = '/colorful-themes';
     }
   }
 
