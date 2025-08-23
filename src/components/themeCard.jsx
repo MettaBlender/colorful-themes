@@ -1,3 +1,5 @@
+'use client'
+
 import React, {useState} from 'react'
 
 const ThemeCard = ({theme, openEdit, setWarningOpen, setDownloadOpen, setDeleteId}) => {
