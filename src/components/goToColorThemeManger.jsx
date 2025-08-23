@@ -9,7 +9,7 @@ const GoToColorThemeManger = ({className}) => {
     if (window.location.href.includes('/colorful-themes')) {
       window.history.back();
     } else {
-      window.location.href = '/colorful-themes';
+      window.location.href = 'app/colorful-themes';
     }
   }
 
