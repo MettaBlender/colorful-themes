@@ -7,7 +7,7 @@ import getContrastRatio, {getWizardColors} from '@/components/wizardFunctions'
 import ColorInput from '@/components/colorInput'
 import ThemeCard from '@/components/themeCard'
 
-const page = () => {
+const Page = () => {
 
   const [themes, setThemes] = useState([{
     id: 0,
@@ -480,4 +480,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
