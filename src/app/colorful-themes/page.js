@@ -10,55 +10,55 @@ import ThemeCard from '@/components/themeCard'
 const Page = () => {
 
   const [themes, setThemes] = useState([{
-    id: 0,
-    name: "Default",
-    foreground: "#000000",
-    foregroundSecondary: "#6B7280",
-    foregroundTertiary: "#9CA3AF",
-    background: "#ffffff",
-    backgroundSecondary: "#F3F4F6",
-    backgroundTertiary: "#E5E7EB",
-    buttonBackground: "#00C4FF",
-    buttonHover: "#FF4E88",
-    buttonText: "#ffffff",
-    linkColor: "#00C4FF",
-    linkClickedColor: "#FF4E88",
-    accentPrimary: "#00C4FF",
-    accentSecondary: "#FF99BB",
-    accentTertiary: "#FF4E88",
-    accentQuaternary: "#66E0FF",
-    focusRing: "#FF4E88",
-    hover: "#FF4E88",
-    error: "#EF4444",
-    warning: "#F59E0B",
-    success: "#10B981",
-    borderPrimary: "#D1D5DB",
-    borderSecondary: "#E5E7EB"
+    "id": 0,
+    "name": "Default",
+    "foreground": "#000000",
+    "foregroundSecondary": "#1a1a1a",
+    "foregroundTertiary": "#333333",
+    "background": "#ffffff",
+    "backgroundSecondary": "#d9d9d9",
+    "backgroundTertiary": "#b3b3b3",
+    "buttonBackground": "#000000",
+    "buttonHover": "#333333",
+    "buttonText": "#ffffff",
+    "linkColor": "#1a1a1a",
+    "linkClickedColor": "#1a1a1a",
+    "accentPrimary": "#000000",
+    "accentSecondary": "#000000",
+    "accentTertiary": "#000000",
+    "accentQuaternary": "#000000",
+    "focusRing": "#000000",
+    "hover": "#0d0d0d",
+    "error": "#df9f9f",
+    "warning": "#dfc59f",
+    "success": "#9fdf9f",
+    "borderPrimary": "#808080",
+    "borderSecondary": "#808080"
   }])
 
   const [colors, setColors] = useState({
-    foreground: "#000000",
-    foregroundSecondary: "#6B7280",
-    foregroundTertiary: "#9CA3AF",
-    background: "#ffffff",
-    backgroundSecondary: "#F3F4F6",
-    backgroundTertiary: "#E5E7EB",
-    buttonBackground: "#00C4FF",
-    buttonHover: "#FF4E88",
-    buttonText: "#ffffff",
-    linkColor: "#00C4FF",
-    linkClickedColor: "#FF4E88",
-    accentPrimary: "#00C4FF",
-    accentSecondary: "#FF99BB",
-    accentTertiary: "#FF4E88",
-    accentQuaternary: "#66E0FF",
-    focusRing: "#FF4E88",
-    hover: "#FF4E88",
-    error: "#EF4444",
-    warning: "#F59E0B",
-    success: "#10B981",
-    borderPrimary: "#D1D5DB",
-    borderSecondary: "#E5E7EB"
+    "foreground": "#000000",
+    "foregroundSecondary": "#1a1a1a",
+    "foregroundTertiary": "#333333",
+    "background": "#ffffff",
+    "backgroundSecondary": "#d9d9d9",
+    "backgroundTertiary": "#b3b3b3",
+    "buttonBackground": "#000000",
+    "buttonHover": "#333333",
+    "buttonText": "#ffffff",
+    "linkColor": "#1a1a1a",
+    "linkClickedColor": "#1a1a1a",
+    "accentPrimary": "#000000",
+    "accentSecondary": "#000000",
+    "accentTertiary": "#000000",
+    "accentQuaternary": "#000000",
+    "focusRing": "#000000",
+    "hover": "#0d0d0d",
+    "error": "#df9f9f",
+    "warning": "#dfc59f",
+    "success": "#9fdf9f",
+    "borderPrimary": "#808080",
+    "borderSecondary": "#808080"
   })
 
   const [wizardColors, setWizardColors] = useState({
@@ -117,28 +117,28 @@ const Page = () => {
 
     // Reset form
     setColors({
-      foreground: "#000000",
-      foregroundSecondary: "#6B7280",
-      foregroundTertiary: "#9CA3AF",
-      background: "#ffffff",
-      backgroundSecondary: "#F3F4F6",
-      backgroundTertiary: "#E5E7EB",
-      buttonBackground: "#00C4FF",
-      buttonHover: "#FF4E88",
-      buttonText: "#ffffff",
-      linkColor: "#00C4FF",
-      linkClickedColor: "#FF4E88",
-      accentPrimary: "#00C4FF",
-      accentSecondary: "#FF99BB",
-      accentTertiary: "#FF4E88",
-      accentQuaternary: "#66E0FF",
-      focusRing: "#FF4E88",
-      hover: "#FF4E88",
-      error: "#EF4444",
-      warning: "#F59E0B",
-      success: "#10B981",
-      borderPrimary: "#D1D5DB",
-      borderSecondary: "#E5E7EB"
+      "foreground": "#000000",
+      "foregroundSecondary": "#1a1a1a",
+      "foregroundTertiary": "#333333",
+      "background": "#ffffff",
+      "backgroundSecondary": "#d9d9d9",
+      "backgroundTertiary": "#b3b3b3",
+      "buttonBackground": "#000000",
+      "buttonHover": "#333333",
+      "buttonText": "#ffffff",
+      "linkColor": "#1a1a1a",
+      "linkClickedColor": "#1a1a1a",
+      "accentPrimary": "#000000",
+      "accentSecondary": "#000000",
+      "accentTertiary": "#000000",
+      "accentQuaternary": "#000000",
+      "focusRing": "#000000",
+      "hover": "#0d0d0d",
+      "error": "#df9f9f",
+      "warning": "#dfc59f",
+      "success": "#9fdf9f",
+      "borderPrimary": "#808080",
+      "borderSecondary": "#808080"
     });
   }
 
@@ -357,7 +357,7 @@ const Page = () => {
         </div>
       </div>}
       {downloadOpen && <div className='fixed w-screen h-screen backdrop-blur-xs flex justify-center items-center z-20' onClick={() => setDownloadOpen(false)}>
-        <div className='w-[40%] min-h-[30%] max-h-[70%] overflow-y-auto rounded-2xl p-4 bg-background-secondary text-white flex justify-start items-center flex-col gap-6' onClick={(e) => e.stopPropagation()}>
+        <div className='w-[40%] min-h-[30%] max-h-[70%] overflow-y-auto rounded-2xl p-4 bg-background-secondary flex justify-start items-center flex-col gap-6' onClick={(e) => e.stopPropagation()}>
           <p className='text-3xl'>Download the theme</p>
           <select className='bg-background text-foreground px-2 py-1 rounded-md' value={downloadMode} onChange={(e) => setDownloadMode(e.target.value)}>
             <option value="css">CSS Variables</option>
