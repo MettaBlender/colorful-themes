@@ -319,7 +319,7 @@ const Page = () => {
   return (
     <>
       {warningOpen && <div className='fixed w-screen h-screen backdrop-blur-xs flex justify-center items-center z-20' onClick={() => setWarningOpen(false)}>
-        <div className='w-[40%] h-[30%] rounded-2xl p-4 bg-error text-white flex justify-center items-center flex-col gap-6' onClick={(e) => e.stopPropagation()}>
+        <div className='w-[40%] h-[30%] rounded-2xl p-4 bg-error flex justify-center items-center flex-col gap-6' onClick={(e) => e.stopPropagation()}>
           <p className='text-3xl'>Do you want to delete this theme?</p>
           <button className='transition-colors duration-400 ease-in-out px-4 py-2 rounded cursor-pointer' onClick={() => deleteTheme(deleteId)}>Delete</button>
         </div>
